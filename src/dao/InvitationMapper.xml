@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 编写接口的实现xml文件 -->
+<mapper namespace="dao.InvitationMapper">
+	<!-- 获得所有的帖子信息 -->
+	<select id="getInvList" resultMap="inList">
+		select * from invitation
+	</select>
+	
+	<!-- 定义一个自定义的结果集映射 -->
+	<resultMap type="Invitation" id="inList">
+		
+	</resultMap>
+	
+	<!-- 根据标题进行模糊查询的数据总条数sql元素 -->
+	 <select id="getCountByTitle" parameterType="String">
+		select count(1) from invitation where title like concat('%',#{title},'%')
+	</select> 
+	
+	<select id="findByTitle" resultMap="inList">
+		select * from invitation where title like concat('%',#{title},'%')
+	</select>
+	
+	<!-- 定义删除帖子的sql元素 -->
+	<delete id="deteleInvi">
+		delete from invitation where id=#{id}
+	</delete>
+	<!-- 获得数据总条数的方法 -->
+	<select id="getCount">
+	   select count(1) from invitation;
+	</select>
+	<!-- 分页数据总条数 -->
+	<select id="getPageLists" resultMap="inlist">
+	    select*from invitation limit #{(currPage-1)*pageSize},#{pageSize}
+	</select>
+	<select id="getPagelistsByTitle" parameterType="inlist">
+		select count(1) from invitation where title like concat('%',#{title},'%')
+	</select> 
+</mapper>

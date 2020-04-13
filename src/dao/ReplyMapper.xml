@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ReplyMapper">
+	<!-- 定义一个查询指定帖子id的所有回复信息sql元素 -->
+	<select id="getReplyList" resultMap="rlist">
+		select * from reply_detail where invid=#{id}
+	</select>
+	<!-- 定义一个自定义的结果集 -->
+	<resultMap type="Reply" id="rlist"></resultMap>
+	
+	<!-- 定义添加回复信息的sql元素 -->
+	<insert id="saveReply" parameterType="Reply">
+		INSERT INTO reply_detail(invid,content,author,createdate) VALUES(#{invid},#{content},#{author},#{createdate})
+	</insert>
+	
+	<!-- 定义一个删除指定帖子id回复信息的sql元素-->
+	<delete id="deleteReplay">
+		delete from reply_detail where invid=#{id}
+	</delete>
+</mapper>
